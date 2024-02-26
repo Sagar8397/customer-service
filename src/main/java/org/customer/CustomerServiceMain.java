@@ -1,4 +1,4 @@
-package org.dnyanyog;
+package org.customer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CustomerServiceMain {
 
-	public static void main(String args[])
-	{
+	public static void main(String[] args) {
+
 		SpringApplication.run(CustomerServiceMain.class, args);
 	}
 }

@@ -1,17 +1,14 @@
-package org.dnyanyog.dto;
+package org.customer.dto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 @Component
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class AddCustomerResponse {
+public class SearchCustomerResponse {
 
 	private String status;
 	private String message;
-	private Long customer_id;
+	private long customerId;
 
 	@Autowired
 	private CustomerData customerData;
@@ -32,19 +29,19 @@ public class AddCustomerResponse {
 		this.message = message;
 	}
 
+	public long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
+	}
+
 	public CustomerData getCustomerData() {
 		return customerData;
 	}
 
 	public void setCustomerData(CustomerData customerData) {
 		this.customerData = customerData;
-	}
-
-	public Long getCustomer_id() {
-		return customer_id;
-	}
-
-	public void setCustomer_id(Long customer_id) {
-		this.customer_id = customer_id;
 	}
 }
