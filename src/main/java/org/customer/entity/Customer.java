@@ -1,7 +1,5 @@
 package org.customer.entity;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,10 +7,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table
@@ -20,13 +20,16 @@ import jakarta.validation.Valid;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Customer {
 
-	@Valid
-
-	@GeneratedValue(generator="customer_seq") // Auto generated (DB => sequence), primary key
-	@SequenceGenerator(name="customer_seq",sequenceName="customer_seq", allocationSize=1)
+	
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "customer_seq") // Auto generated (DB => sequence), primary key
+	@SequenceGenerator(name = "customer_seq", sequenceName = "customer_seq", allocationSize = 1)
 	@Id
 	@Column(nullable = false, insertable = false, updatable = false)
 	private long customer_code;
+
+	@Column(updatable = true, nullable = false)
+	private long customer_id;
 
 	@Column
 	private String first_name;
@@ -37,14 +40,16 @@ public class Customer {
 	@Column
 	private String middle_name;
 
+	@Email(message = "Invalid email format")
+	@Pattern(regexp = "[a-z]{5,50}(@)[a-z]{2,50}(.)[a-z]{2,10}")
+	@Column(unique = true)
+	private String email_id;
+
 	@Column
 	private String date_of_birth;
 
 	@Column
-	private String address_line1;
-
-	@Column
-	private String address_line2;
+	private String address;
 
 	@Column
 	private String zip;
@@ -58,26 +63,14 @@ public class Customer {
 	@Column
 	private String country;
 
-	@Column(nullable = false, insertable = true, updatable = false)
-	private LocalDateTime created_date;
-
-	@Column(nullable = false, insertable = true, updatable = false)
-	private LocalDateTime updated_date;
-
-	@Column(updatable = true, nullable = false)
-	private long customer_id;
-
-	@Column(name = "mobile")
-	private String mobile;
+	@Column
+	private String mobile_number;
 
 	@Column
 	private String home_phone;
 
 	@Column
 	private String work_phone;
-
-	@Column(unique = true)
-	private String email_id;
 
 	public static Customer getInstance() {
 		return new Customer();
@@ -132,21 +125,11 @@ public class Customer {
 	}
 
 	public String getAddress_line1() {
-		return address_line1;
+		return address;
 	}
 
-	public Customer setAddress_line1(String address_line1) {
-		this.address_line1 = address_line1;
-		return this;
-	}
-
-	public String getAddress_line2() {
-		return address_line2;
-	}
-
-	public Customer setAddress_line2(String address_line2) {
-		this.address_line2 = address_line2;
-
+	public Customer setAddress_line1(String address) {
+		this.address = address;
 		return this;
 	}
 
@@ -190,11 +173,11 @@ public class Customer {
 	}
 
 	public String getMobile_phone() {
-		return mobile;
+		return mobile_number;
 	}
 
 	public Customer setMobile_phone(String mobile_phone) {
-		this.mobile = mobile_phone;
+		this.mobile_number = mobile_phone;
 
 		return this;
 	}
@@ -235,26 +218,6 @@ public class Customer {
 
 	public Customer setCustomer_id(long customer_id) {
 		this.customer_id = customer_id;
-
 		return this;
 	}
-
-	public LocalDateTime getCreated_date() {
-		return created_date;
-	}
-
-	public Customer setCreated_date(LocalDateTime created_date) {
-		this.created_date = created_date;
-		return this;
-	}
-
-	public LocalDateTime getUpdated_date() {
-		return updated_date;
-	}
-
-	public Customer setUpdated_date(LocalDateTime updated_date) {
-		this.updated_date = updated_date;
-		return this;
-	}
-
 }

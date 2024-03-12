@@ -3,12 +3,14 @@ package org.customer.dto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Component
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchCustomerResponse {
 
 	private String status;
 	private String message;
-	private long customerId;
 
 	@Autowired
 	private CustomerData customerData;
@@ -27,14 +29,6 @@ public class SearchCustomerResponse {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public long getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
 	}
 
 	public CustomerData getCustomerData() {

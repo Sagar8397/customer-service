@@ -1,7 +1,11 @@
 package org.customer.controller;
 
+import java.util.List;
+
 import org.customer.dto.CustomerRequest;
 import org.customer.dto.CustomerResponse;
+import org.customer.dto.SearchCustomerResponse;
+import org.customer.entity.Customer;
 import org.customer.service.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +18,7 @@ import jakarta.validation.Valid;
 
 @RestController
 public class CustsomerServiceController {
-
+	
 	@Autowired
 	CustomerServiceImpl CustomerServiceImpl;
 
@@ -31,7 +35,17 @@ public class CustsomerServiceController {
 	}
 
 	@GetMapping(path = "/api/v1/customer/search/{mobile_number}")
-	public CustomerResponse searchCustomerByMobileNumber(String mobile_number) {
+	public SearchCustomerResponse searchCustomerByMobileNumber(@PathVariable String mobile_number) {
 		return CustomerServiceImpl.findByMobileNumber(mobile_number);
+	}
+
+	@GetMapping(path = "/api/v1/customer/search/customer_id/{customer_id}")
+	public SearchCustomerResponse searchCustomerByUserId(@PathVariable String customer_id) {
+		return CustomerServiceImpl.searchCustomerByUserId(customer_id);
+	}
+
+	@GetMapping(path = "/api/v1/customer/getAllCustomer")
+	public List<Customer> getAllCustomer() {
+		return CustomerServiceImpl.getAllCustomer();
 	}
 }
